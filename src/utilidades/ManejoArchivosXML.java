@@ -24,104 +24,144 @@ public class ManejoArchivosXML {
     public ManejoArchivosXML() {
     }//constructor
 
-    public void duplicarDocumentos() {
+    public boolean duplicarDocumentos(String[] parametros) {
+        /* parametros = 
+                    0 iteraciones,1 tipo documento, 2 ruta archivo, 3 ruta salida, 4 emisor, 5 receptor, 
+                    6 número documento, 7 fecha del documento, 8 drf_1, 9 drf_2, 10 drf_3, 11 drf_4, 12 drf_5 y 13 drf_6
+         */
+
         try {
 
-            DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
-            DocumentBuilder builder = factory.newDocumentBuilder();
+            if (parametros[1].equalsIgnoreCase("nc") || parametros[1].equalsIgnoreCase("nd") || parametros[1].equalsIgnoreCase("invoic")) {
 
-            Document documento = builder.parse("C:\\Users\\jmedinac\\Desktop\\Insumos_XML_Estandar_Carvajal_2.1\\Sin_Extensiones_por_Sector\\Nota_Credito.xml");//se abre el documento base
+                int numero_iteraciones = Integer.parseInt(parametros[0]);
+                int numero_documento = Integer.parseInt(parametros[6]);
+                String tipo_documento;
 
-            NodeList listaElementosXML = documento.getElementsByTagName("FACTURA");//obtiene todos los elementos contenidos de acuerdo al tag padre indicado 
+                if (parametros[1].equalsIgnoreCase("invoic")) {
+                    tipo_documento = "FACTURA";
+                } else {
+                    tipo_documento = "NOTA";
+                }
 
-            //se recorre la lista obtenida de acuerdo al tag de inicio indicado 
-            for (int i = 0; i < listaElementosXML.getLength(); i++) {
-                Node nodo = listaElementosXML.item(i);//elemento por elemento que se encuentre en el primer nivel
+                for (int h = 0; h < numero_iteraciones; h++) {
 
-                if (nodo.getNodeType() == Node.ELEMENT_NODE) {
+                    DocumentBuilderFactory factory = DocumentBuilderFactory.newInstance();
+                    DocumentBuilder builder = factory.newDocumentBuilder();
 
-                    Element elementoPrimerNivel = (Element) nodo;
-                    NodeList hijosPrimerNivel = elementoPrimerNivel.getChildNodes();//lista primer nivel 
+                    Document documento = builder.parse(parametros[2]);//se abre el documento base
 
-                    for (int j = 0; j < hijosPrimerNivel.getLength(); j++) {
+                    NodeList listaElementosXML = documento.getElementsByTagName(tipo_documento);//obtiene todos los elementos contenidos de acuerdo al tag padre indicado 
 
-                        Node subHijoPrimerNivel = hijosPrimerNivel.item(j);
+                    //se recorre la lista obtenida de acuerdo al tag de inicio indicado 
+                    for (int i = 0; i < listaElementosXML.getLength(); i++) {
+                        Node nodo = listaElementosXML.item(i);//elemento por elemento que se encuentre en el primer nivel
 
-                        if (subHijoPrimerNivel.getNodeType() == Node.ELEMENT_NODE) {
+                        if (nodo.getNodeType() == Node.ELEMENT_NODE) {
 
-                            Element elementoSegundoNivel = (Element) subHijoPrimerNivel;
-                            NodeList hijosSegundoNivel = elementoSegundoNivel.getChildNodes();;//lista segundo nivel
+                            Element elementoPrimerNivel = (Element) nodo;
+                            NodeList hijosPrimerNivel = elementoPrimerNivel.getChildNodes();//lista primer nivel 
 
-                            for (int k = 0; k < hijosSegundoNivel.getLength(); k++) {
+                            for (int j = 0; j < hijosPrimerNivel.getLength(); j++) {
 
-                                Node subHijoSegundoNivel = hijosSegundoNivel.item(k);
+                                Node subHijoPrimerNivel = hijosPrimerNivel.item(j);
 
-                                if (subHijoSegundoNivel.getNodeType() == Node.ELEMENT_NODE) {
-                                    //Incia los cambios en los campos del documento    
-                                    if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("ENC_2")) {
-                                        subHijoSegundoNivel.setTextContent("prueba");
-                                    }
-                                    if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("ENC_3")) {
-                                        subHijoSegundoNivel.setTextContent("prueba");
-                                    }
-                                    if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("ENC_6")) {
-                                        subHijoSegundoNivel.setTextContent("prueba");
-                                    }
-                                    if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("ENC_7")) {
-                                        subHijoSegundoNivel.setTextContent("prueba");
-                                    }
-                                    if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("ENC_16")) {
-                                        subHijoSegundoNivel.setTextContent("prueba");
-                                    }
-                                    if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("EMI_2")) {
-                                        subHijoSegundoNivel.setTextContent("prueba");
-                                    }
-                                    if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("ADQ_2")) {
-                                        subHijoSegundoNivel.setTextContent("prueba");
-                                    }
-                                    if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("DRF_1")) {
-                                        subHijoSegundoNivel.setTextContent("prueba");
-                                    }
-                                    if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("DRF_2")) {
-                                        subHijoSegundoNivel.setTextContent("prueba");
-                                    }
-                                    if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("DRF_3")) {
-                                        subHijoSegundoNivel.setTextContent("prueba");
-                                    }
-                                    if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("DRF_4")) {
-                                        subHijoSegundoNivel.setTextContent("prueba");
-                                    }
-                                    if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("DRF_5")) {
-                                        subHijoSegundoNivel.setTextContent("prueba");
-                                    }
-                                    if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("DRF_6")) {
-                                        subHijoSegundoNivel.setTextContent("prueba");
+                                if (subHijoPrimerNivel.getNodeType() == Node.ELEMENT_NODE) {
+
+                                    Element elementoSegundoNivel = (Element) subHijoPrimerNivel;
+                                    NodeList hijosSegundoNivel = elementoSegundoNivel.getChildNodes();;//lista segundo nivel
+
+                                    for (int k = 0; k < hijosSegundoNivel.getLength(); k++) {
+
+                                        Node subHijoSegundoNivel = hijosSegundoNivel.item(k);
+
+                                        if (subHijoSegundoNivel.getNodeType() == Node.ELEMENT_NODE) {
+                                            //Incia los cambios en los campos del documento    
+                                            if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("ENC_2")) {
+                                                subHijoSegundoNivel.setTextContent(parametros[4]);//Emisor
+                                            }
+                                            if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("ENC_3")) {
+                                                subHijoSegundoNivel.setTextContent(parametros[5]);//Receptor
+                                            }
+                                            if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("ENC_6")) {
+                                                subHijoSegundoNivel.setTextContent(parametros[11] + numero_documento);//prefijo más número de documento 
+                                            }
+                                            if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("ENC_7")) {
+                                                subHijoSegundoNivel.setTextContent(parametros[7]);//fecha del documento
+                                            }
+                                            if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("ENC_16")) {
+                                                subHijoSegundoNivel.setTextContent(parametros[7]);//fecha del documento para caducidad del documento
+                                            }
+                                            if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("EMI_2")) {
+                                                subHijoSegundoNivel.setTextContent(parametros[4]);//Emisor
+                                            }
+                                            if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("ADQ_2")) {
+                                                subHijoSegundoNivel.setTextContent(parametros[5]);//Receptor
+                                            }
+                                            if (tipo_documento.equalsIgnoreCase("FACTURA")) {
+
+                                                if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("DRF_1")) {
+                                                    subHijoSegundoNivel.setTextContent(parametros[8]);//drf_1 número de autorización DIAN
+                                                }
+                                                if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("DRF_2")) {
+                                                    subHijoSegundoNivel.setTextContent(parametros[9]);//drf_2 fecha incio vigencia del rango de numeración
+                                                }
+                                                if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("DRF_3")) {
+                                                    subHijoSegundoNivel.setTextContent(parametros[10]);//drf_3 fecha fin vigencia del rango de numeración
+                                                }
+                                                if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("DRF_4")) {
+                                                    subHijoSegundoNivel.setTextContent(parametros[11]);//drf_4 prefijo autorizado 
+                                                }
+                                                if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("DRF_5")) {
+                                                    subHijoSegundoNivel.setTextContent(parametros[12]);//drf_5 incio del rango de numeración
+                                                }
+                                                if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("DRF_6")) {
+                                                    subHijoSegundoNivel.setTextContent(parametros[13]);//drf_6 fin del rango de numeración
+                                                }
+                                            } else {
+                                                if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("DRF_4")) {
+                                                    subHijoSegundoNivel.setTextContent(parametros[11]);//drf_4 prefijo autorizado 
+                                                }
+                                                if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("DRF_5")) {
+                                                    subHijoSegundoNivel.setTextContent(parametros[12]);//drf_5 incio del rango de numeración
+                                                }
+                                                if (subHijoSegundoNivel.getNodeName().equalsIgnoreCase("DRF_6")) {
+                                                    subHijoSegundoNivel.setTextContent(parametros[13]);//drf_6 fin del rango de numeración
+                                                }
+                                            }
+                                        }
                                     }
                                 }
                             }
                         }
                     }
+                    crearDocumentos(parametros[3] + "\\" + parametros[1].toUpperCase() + "_" + parametros[11] + numero_documento + ".xml", documento);//Después de ajustar el documento este pasa como parámetro para crear el documento nuevo 
+                    numero_documento++;//incrementa el valor del número de documento 
                 }
+            } else {
+                System.err.println("El tipo de documento no es válido, los valores permitidos son: NC, ND e INVOIC)");
+                return false;
             }
-            crearDocumentos(documento);//Después de ajustar el documento este pasa como parámetro para crear el documento nuevo 
+            return true;
         } catch (IOException | ParserConfigurationException | DOMException | SAXException e) {
             System.out.println("Error: " + e.getMessage());
+            System.out.println("Error en el método duplicarDocumentos()");
+            return false;
         }
     }
 
-    public void crearDocumentos(Document documento) {
+    public void crearDocumentos(String path_documento, Document documento) {
 
         try {
             Source source = new DOMSource(documento);//creamos el fichero 
-            Result result = new StreamResult(new File("C:\\Users\\jmedinac\\Desktop\\nombre_archivo2.xml"));//se crear el archivo en la ruta deseada y nombre deseado
+            Result result = new StreamResult(new File(path_documento));//se crear el archivo en la ruta deseada y nombre deseado
 
             Transformer transformer = TransformerFactory.newInstance().newTransformer();
             transformer.transform(source, result);
-            System.out.println("Documento creado!!");
+
         } catch (TransformerException e) {
             System.out.println("Error: " + e.getMessage());
+            System.out.println("Error en el método crearDocumentos()");
         }
-
     }
-
 }

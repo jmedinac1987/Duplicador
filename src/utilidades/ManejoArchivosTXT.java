@@ -103,7 +103,8 @@ public class ManejoArchivosTXT {
 
             return true;
         } catch (IOException e) {
-            System.err.println("Excepción: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error en el método duplicarDocumentos()");
             return false;
         }
 
@@ -119,8 +120,8 @@ public class ManejoArchivosTXT {
             bufferWritter.close();//cierra la edición             
 
         } catch (IOException e) {
-            System.err.println("Excepción: " + e.getMessage());
-            return;
+            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error en el método crearDocumentos()");
         }
 
     }
@@ -139,7 +140,8 @@ public class ManejoArchivosTXT {
             return bufferReader;//retorna el buffer de lectura 
 
         } catch (FileNotFoundException e) {
-            System.err.println("Excepción: " + e.getMessage());
+            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error en el método bufferLecturaDocumento()");
             return null;
         }
     }
@@ -149,8 +151,8 @@ public class ManejoArchivosTXT {
             openFile.close();
             inputData.close();
         } catch (IOException e) {
-            System.err.println("Excepción: " + e.getMessage());
-            return;
+            System.err.println("Error: " + e.getMessage());
+            System.err.println("Error en el método cerrarParametrosBufferedLectura()");
         }
     }
 
