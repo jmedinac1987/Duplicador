@@ -35,14 +35,14 @@ public class ManejoArchivosTXT {
                 for (int j = 0; j < numero_iteraciones; j++) {
 
                     String separador;
-                    BufferedReader bufferReader = bufferLecturaDocumento(parametros[2]);//buffer para lectura del archivo .csv
+                    BufferedReader bufferReader = bufferLecturaDocumento(parametros[2]);//buffer para lectura del archivo plano
                     separador = parametros[4];
                     String line;
                     String informacion_nuevo_documento = "";
 
                     while ((line = bufferReader.readLine()) != null) {
 
-                        //Separa la l�nea leída con el separador definido previamente
+                        //Separa la línea leída con el separador definido en los parámetros de entrada
                         String[] fields = line.split(String.valueOf(separador));
 
                         for (int i = 0; i < fields.length; i++) {
@@ -114,7 +114,7 @@ public class ManejoArchivosTXT {
 
         try {
 
-            BufferedWriter bufferWritter = new BufferedWriter(new FileWriter(file));
+            BufferedWriter bufferWritter = new BufferedWriter(new FileWriter(file));//abre el documento para luego ingresar la información que se recibe en los parámetros del método
             bufferWritter.write(informacion);//ingresa la información al archivo 
             bufferWritter.close();//cierra la edición             
 
